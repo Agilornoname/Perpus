@@ -23,20 +23,21 @@ public class bukuDao {
     private PreparedStatement ps;
     private Connection con;
 
-    public void save() throws SQLException {
+    public void save(Buku d) throws SQLException {
         koneksiDatabase kd = new koneksiDatabase();
         DataSource ds = kd.getDataSource();
         con = ds.getConnection();
         ps = con.prepareStatement(simpan);
-        ps.setString(1, "Belajar java kode");
-        ps.setInt(2, 2017);
-        ps.setString(3, "Asal");
-        ps.setInt(4, 4);
+        ps.setString(1, d.getJudulBuku());
+        ps.setInt(2, d.getTahunTerbit());
+        ps.setString(3, d.getPengarang());
+        ps.setInt(4, d.getJmlBuku());
         ps.executeUpdate();
         ps.close();
         con.close();
 
     }
+
     void update() {
 
     }
