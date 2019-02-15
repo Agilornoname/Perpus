@@ -27,9 +27,4 @@ public class koneksiDatabase {
         ds.setUrl(URL);
         return ds;
     }
-    
-    public static void main(String[] args) throws SQLException {
-        koneksiDatabase db = new koneksiDatabase();
-        db.getDataSource().getConnection();
-    }
 }
