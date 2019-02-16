@@ -10,52 +10,49 @@ package id.co.belajar.perpus.model;
  * @author Krizz2ND
  */
 public class Buku {
-    
-    private Integer id;
-    private String judulBuku;
-    private Integer tahunTerbit;
+    private Integer no;
+    private String judul_buku;
+    private Integer tahun_terbit;
+    private String pengarang;
+    private Integer jml_buku;
 
-    public Integer getId() {
-        return id;
+    public Integer getNo() {
+        return no;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setNo(Integer no) {
+        this.no = no;
     }
 
-    public String getJudulBuku() {
-        return judulBuku;
+    public String getJudul_buku() {
+        return judul_buku;
     }
 
-    public void setJudulBuku(String judulBuku) {
-        this.judulBuku = judulBuku;
+    public void setJudul_buku(String judul_buku) {
+        this.judul_buku = judul_buku;
     }
 
-    public Integer getTahunTerbit() {
-        return tahunTerbit;
+    public Integer getTahun_terbit() {
+        return tahun_terbit;
     }
 
-    public void setTahunTerbit(Integer tahunTerbit) {
-        this.tahunTerbit = tahunTerbit;
+    public void setTahun_terbit(Integer tahun_terbit) {
+        this.tahun_terbit = tahun_terbit;
     }
 
     public String getPengarang() {
-        return Pengarang;
+        return pengarang;
     }
 
-    public void setPengarang(String Pengarang) {
-        this.Pengarang = Pengarang;
+    public void setPengarang(String pengarang) {
+        this.pengarang = pengarang;
     }
 
-    public Integer getJmlBuku() {
-        return jmlBuku;
+    public Integer getJml_buku() {
+        return jml_buku;
     }
 
-    public void setJmlBuku(Integer jmlBuku) {
-        this.jmlBuku = jmlBuku;
+    public void setJml_buku(Integer jml_buku) {
+        this.jml_buku = jml_buku;
     }
-    private String Pengarang;
-    private Integer jmlBuku;
-    
-    
 }

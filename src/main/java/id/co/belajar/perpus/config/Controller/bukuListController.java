@@ -6,7 +6,6 @@
 package id.co.belajar.perpus.config.Controller;
 
 import id.co.belajar.perpus.config.dao.bukuDao;
-import id.co.belajar.perpus.model.Buku;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -21,29 +20,18 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Krizz2ND
  */
-@WebServlet(urlPatterns = "/buku/new")
-public class bukuController extends HttpServlet {
-
-    Buku bu = new Buku();
-    bukuDao bd = new bukuDao();
+@WebServlet(urlPatterns = "/buku/list")
+public class bukuListController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/pages/buku/tambahBuku.jsp").forward(req, resp);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            bu.setJudul_buku(req.getParameter("judulBuku"));
-            bu.setTahun_terbit(Integer.valueOf(req.getParameter("tahunTerbit")));
-            bu.setPengarang(req.getParameter("pengarang"));
-            bu.setJml_buku(Integer.valueOf(req.getParameter("jumlahBuku")));
-            bd.save(bu);
+            bukuDao bd = new bukuDao();
+            req.setAttribute("twerk", bd.findAll());
         } catch (SQLException ex) {
-            Logger.getLogger(bukuController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(bukuListController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        req.getRequestDispatcher("/pages/buku/listBuku.jsp").forward(req, resp);
     }
 
 }

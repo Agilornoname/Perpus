@@ -9,7 +9,9 @@ import id.co.belajar.perpus.config.koneksiDatabase;
 import id.co.belajar.perpus.model.Buku;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
 
@@ -20,37 +22,105 @@ import javax.sql.DataSource;
 public class bukuDao {
 
     private static final String simpan = "insert into perpus.buku (judul_buku,tahun_terbit,pengarang,jml_buku) values (?,?,?,?)";
+    private static final String list = "select no , judul_buku , tahun_terbit , pengarang , jml_buku  from perpus.buku";
+    private static final String delete = "delete from perpus.buku where no = ?";
+    private static final String findByid = "select * from perpus.buku where no = ?";
+    private static final String update = "UPDATE perpus.buku set judul_buku = ? , tahun_terbit = ? , pengarang = ? , jml_buku = ? WHERE no=?";
     private PreparedStatement ps;
     private Connection con;
+    private DataSource ds;
+    private ResultSet rs;
+    koneksiDatabase kd;
 
     public void save(Buku d) throws SQLException {
-        koneksiDatabase kd = new koneksiDatabase();
-        DataSource ds = kd.getDataSource();
+        kd = new koneksiDatabase();
+        ds = kd.getDataSource();
         con = ds.getConnection();
         ps = con.prepareStatement(simpan);
-        ps.setString(1, d.getJudulBuku());
-        ps.setInt(2, d.getTahunTerbit());
+        ps.setString(1, d.getJudul_buku());
+        ps.setInt(2, d.getTahun_terbit());
         ps.setString(3, d.getPengarang());
-        ps.setInt(4, d.getJmlBuku());
+        ps.setInt(4, d.getJml_buku());
         ps.executeUpdate();
         ps.close();
         con.close();
 
     }
 
-    void update() {
+    public void update(Buku bk) throws SQLException {
+        Buku d = new Buku();
+        kd = new koneksiDatabase();
+        ds = kd.getDataSource();
+        con = ds.getConnection();
+        ps = con.prepareStatement(update);
+
+        ps.setString(1, bk.getJudul_buku());
+        ps.setInt(2, bk.getTahun_terbit());
+        ps.setString(3, bk.getPengarang());
+        ps.setInt(4, bk.getJml_buku());
+        ps.setInt(5, bk.getNo());
+
+        ps.executeUpdate();
+        
+        ps.close();
+        con.close();
+    }
+
+    public void delete(Integer hapus) throws SQLException {
+        kd = new koneksiDatabase();
+        ds = kd.getDataSource();
+        con = ds.getConnection();
+        ps = con.prepareStatement(delete);
+        ps.setInt(1, hapus);
+        ps.executeUpdate();
+        ps.close();
+        con.close();
 
     }
 
-    void delete() {
+    public List<Buku> findAll() throws SQLException {
 
+        List<Buku> lb = new ArrayList<>();
+        kd = new koneksiDatabase();
+        ds = kd.getDataSource();
+        con = ds.getConnection();
+        ps = con.prepareStatement(list);
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Buku d = new Buku();
+            d.setNo(rs.getInt("no"));
+            d.setJudul_buku(rs.getString("judul_buku"));
+            d.setTahun_terbit(rs.getInt("tahun_terbit"));
+            d.setPengarang(rs.getString("pengarang"));
+            d.setJml_buku(rs.getInt("jml_buku"));
+            lb.add(d);
+        }
+        rs.close();
+        ps.close();
+        con.close();
+        return lb;
     }
 
-    public List<Buku> findAll() {
-        return null;
-    }
+    public Buku findById(Integer idBuku) throws SQLException {
+        Buku d = new Buku();
+        kd = new koneksiDatabase();
+        ds = kd.getDataSource();
+        con = ds.getConnection();
+        ps = con.prepareStatement(findByid);
+        ps.setInt(1, idBuku);
+        rs = ps.executeQuery();
 
-    public Buku findById(Integer idBuku) {
-        return null;
+        if (rs.next()) {
+            d.setNo(rs.getInt("no"));
+            d.setJudul_buku(rs.getString("judul_buku"));
+            d.setTahun_terbit(rs.getInt("tahun_terbit"));
+            d.setPengarang(rs.getString("pengarang"));
+            d.setJml_buku(rs.getInt("jml_buku"));
+        }
+        rs.close();
+        ps.close();
+        con.close();
+        return d;
     }
 }
