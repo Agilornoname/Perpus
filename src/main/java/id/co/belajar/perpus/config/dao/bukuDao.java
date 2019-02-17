@@ -22,10 +22,10 @@ import javax.sql.DataSource;
 public class bukuDao {
 
     private static final String simpan = "insert into perpus.buku (judul_buku,tahun_terbit,pengarang,jml_buku) values (?,?,?,?)";
-    private static final String list = "select no , judul_buku , tahun_terbit , pengarang , jml_buku  from perpus.buku";
-    private static final String delete = "delete from perpus.buku where no = ?";
-    private static final String findByid = "select * from perpus.buku where no = ?";
-    private static final String update = "UPDATE perpus.buku set judul_buku = ? , tahun_terbit = ? , pengarang = ? , jml_buku = ? WHERE no=?";
+    private static final String list = "select Id , judul_buku , tahun_terbit , pengarang , jml_buku  from perpus.buku";
+    private static final String delete = "delete from perpus.buku where Id = ?";
+    private static final String findById = "select * from perpus.buku where Id = ?";
+    private static final String update = "UPDATE perpus.buku set judul_buku = ? , tahun_terbit = ? , pengarang = ? , jml_buku = ? WHERE Id=?";
     private PreparedStatement ps;
     private Connection con;
     private DataSource ds;
@@ -58,7 +58,7 @@ public class bukuDao {
         ps.setInt(2, bk.getTahun_terbit());
         ps.setString(3, bk.getPengarang());
         ps.setInt(4, bk.getJml_buku());
-        ps.setInt(5, bk.getNo());
+        ps.setInt(5, bk.getId());
 
         ps.executeUpdate();
         
@@ -89,7 +89,7 @@ public class bukuDao {
 
         while (rs.next()) {
             Buku d = new Buku();
-            d.setNo(rs.getInt("no"));
+            d.setId(rs.getInt("Id"));
             d.setJudul_buku(rs.getString("judul_buku"));
             d.setTahun_terbit(rs.getInt("tahun_terbit"));
             d.setPengarang(rs.getString("pengarang"));
@@ -102,17 +102,17 @@ public class bukuDao {
         return lb;
     }
 
-    public Buku findById(Integer idBuku) throws SQLException {
+    public Buku findById(Integer IdBuku) throws SQLException {
         Buku d = new Buku();
         kd = new koneksiDatabase();
         ds = kd.getDataSource();
         con = ds.getConnection();
-        ps = con.prepareStatement(findByid);
-        ps.setInt(1, idBuku);
+        ps = con.prepareStatement(findById);
+        ps.setInt(1, IdBuku);
         rs = ps.executeQuery();
 
         if (rs.next()) {
-            d.setNo(rs.getInt("no"));
+            d.setId(rs.getInt("Id"));
             d.setJudul_buku(rs.getString("judul_buku"));
             d.setTahun_terbit(rs.getInt("tahun_terbit"));
             d.setPengarang(rs.getString("pengarang"));

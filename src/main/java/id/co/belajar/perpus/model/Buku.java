@@ -10,18 +10,18 @@ package id.co.belajar.perpus.model;
  * @author Krizz2ND
  */
 public class Buku {
-    private Integer no;
+    private Integer Id;
     private String judul_buku;
     private Integer tahun_terbit;
     private String pengarang;
     private Integer jml_buku;
 
-    public Integer getNo() {
-        return no;
+    public Integer getId() {
+        return Id;
     }
 
-    public void setNo(Integer no) {
-        this.no = no;
+    public void setId(Integer Id) {
+        this.Id = Id;
     }
 
     public String getJudul_buku() {

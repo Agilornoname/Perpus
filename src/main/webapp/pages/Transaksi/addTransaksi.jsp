@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,21 +16,19 @@
         <form action="${pageContext.servletContext.contextPath}/transaksi/pinjam" method="post">
             <div>
                 <label for="bukuId">Pilih Buku</label>
-                    <select name="bukuId" id="bukuId">
-                        <option value="1">Java fundamental 12</option>
-                        <option value="2">Java Middle 13</option>
-                        <option value="1">Java Pro 14</option>
-                        <option value="1">Java Prooo sangat 15</option>
-                    </select>
+                <select name="bukuId" id="bukuId">
+                    <c:forEach items="${listBuku}" var="qqq" varStatus="qwe">
+                        <option value="${qqq.id}">${qqq.judul_buku} ${qqq.jml_buku}</option>
+                    </c:forEach>
+                </select>
             </div>
             <div>
-                <label for="pengunjungId">Pilih pengunjung</label>
-                    <select>
-                        <option value="1">wakwaw</option>
-                        <option value="2">brwonia</option>
-                        <option value="1">nina</option>
-                        <option value="1">senina</option>
-                    </select>
+                <label for="pengunjungId">Pilih peminjam</label>
+                <select>
+                    <c:forEach items="${listPeminjam}" var="b" varStatus="qwe">
+                        <option value="${b.id}">${b.nama} ${b.alamat}</option>
+                    </c:forEach>
+                </select>
             </div>
             <div>
                 <button type="submit">Submit</button>
